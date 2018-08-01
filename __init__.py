@@ -168,6 +168,11 @@ register(
 )
 
 register(
+    id='HamsterExperiment-v0',
+    entry_point='gym.envs.toy_text:HamsterExperimentEnv',
+)
+
+register(
     id='NChain-v0',
     entry_point='gym.envs.toy_text:NChainEnv',
     max_episode_steps=1000,
