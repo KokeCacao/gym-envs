@@ -34,7 +34,8 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
     def __init__(self):
         ########## YOU KNOW WHAT, I WILL TAKE MY RISK ##########
         # self.shape = (4, 12)  # shape of the map (y, x)
-        # self.start_state_index = np.ravel_multi_index((3, 0), self.shape)  # return the id of the state on (y=3, x=0)
+        # self.start_coord = (3, 0)
+        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
         # self.end_coord = (3, 11)
         # # Obs Location
         # self._obs = np.zeros(self.shape, dtype=np.bool)
@@ -47,7 +48,8 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # self.step_award = -1.0
 
         # self.shape = (7, 12)  # shape of the map (y, x)
-        # self.start_state_index = np.ravel_multi_index((5, 0), self.shape)  # return the id of the state on (y=3, x=0)
+        # self.start_coord = (5, 0)
+        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
         # self.end_coord = (5, 11)
         # # Obs Location
         # self._obs = np.zeros(self.shape, dtype=np.bool)
@@ -59,21 +61,8 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # self.end_award = 10.0
         # self.step_award = -0.1
 
-        # self.shape = (7, 12)  # shape of the map (y, x)
-        # # TRY CHANGING THE COORDINATE FROM 5 TO 6
-        # self.start_state_index = np.ravel_multi_index((6, 0), self.shape)  # return the id of the state on (y=3, x=0)
-        # self.end_coord = (5, 11)
-        # # Obs Location
-        # self._obs = np.zeros(self.shape, dtype=np.bool)
-        # self._obs[5, 1:-1] = True
-        # self.obs_reward = -100
-        # self.slippery = 0.2
-        # self.not_moving = 1.0
-        # self.not_moving_on_obs = 1.0
-        # self.end_award = 10.0
-        # self.step_award = -1.0  # STEP PENATY!
-
         self.shape = (7, 12)  # shape of the map (y, x)
+        # TRY CHANGING THE COORDINATE FROM 5 TO 6
         self.start_coord = (6, 0)
         self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
         self.end_coord = (5, 11)
@@ -85,7 +74,21 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         self.not_moving = 1.0
         self.not_moving_on_obs = 1.0
         self.end_award = 10.0
-        self.step_award = -0.1  # STEP PENATY!
+        self.step_award = -1.0  # STEP PENATY!
+
+        # self.shape = (7, 12)  # shape of the map (y, x)
+        # self.start_coord = (6, 0)
+        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
+        # self.end_coord = (5, 11)
+        # # Obs Location
+        # self._obs = np.zeros(self.shape, dtype=np.bool)
+        # self._obs[5, 1:-1] = True
+        # self.obs_reward = -100
+        # self.slippery = 0.2
+        # self.not_moving = 1.0
+        # self.not_moving_on_obs = 1.0
+        # self.end_award = 10.0
+        # self.step_award = -0.1  # STEP PENATY!
 
         nS = np.prod(self.shape)  # number of states
         nA = 4  # number of action
