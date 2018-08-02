@@ -38,7 +38,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # Obs Location
         self._obs = np.zeros(self.shape, dtype=np.bool)
         self._obs[3, 1:-1] = True
-        self.obs_reward = -100
+        self.obs_reward = -1000
         self.slippery = 0.1
         self.not_moving = 1.0
         self.not_moving_on_obs = 1.0
@@ -83,9 +83,10 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         :param delta: Change in position for transition
         :return: (1.0, new_state, reward, done)
         """
+        old_delta = delta
         individual_slippery = self.slippery/4
         delta = np.random.choice([delta, [-1, 0], [0, 1], [1, 0], [0, -1]], p=[1-self.slippery, individual_slippery, individual_slippery, individual_slippery, individual_slippery])
-
+        if delta != old_delta: print("slippery!\n")
         new_position = np.array(current) + np.array(delta)
         new_position = self._limit_coordinates(new_position).astype(int)  # convert a list of float to a list of int
         new_state = np.ravel_multi_index(tuple(new_position), self.shape)  # get its state id
@@ -98,7 +99,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
 
     def render(self, mode='human'):
         # outfile = sys.stdout
-        out = '\r'
+        out = '\rv1.0\n'
 
         for s in range(self.nS):
             position = np.unravel_index(s, self.shape)
