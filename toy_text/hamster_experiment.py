@@ -28,20 +28,25 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
     #############Configuration############
     # self.shape
     # self.start_state_index
-    # 
+    # Obs Location
     #############Configuration############
 
     def __init__(self):
         self.shape = (4, 12)  # shape of the map (y, x)
         self.start_state_index = np.ravel_multi_index((3, 0), self.shape)  # return the id of the state on (y=3, x=0)
-
-        nS = np.prod(self.shape)  # number of states
-        nA = 4  # number of action
-
+        self.end_coord = (3, 11)
         # Obs Location
         self._obs = np.zeros(self.shape, dtype=np.bool)
         self._obs[3, 1:-1] = True
+        self.obs_reward = -100
+        self.slippery = 0.1
+        self.not_moving = 1.0
+        self.not_moving_on_obs = 1.0
+        self.end_award = 1.0
+        self.step_award = -1.0
 
+        nS = np.prod(self.shape)  # number of states
+        nA = 4  # number of action
         # Calculate transition probabilities and rewards
         P = {}
         for s in range(nS):
@@ -73,23 +78,26 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
 
     def _calculate_transition_prob(self, current, delta):
         """
-        Determine the outcome for an action. Transition Prob is always 1.0.
+        Determine the outcome for an action. Transition Prob is always 1.0, but maybe slippery.
         :param current: Current position on the grid as (row, col)
         :param delta: Change in position for transition
         :return: (1.0, new_state, reward, done)
         """
+        individual_slippery = self.slippery/4
+        delta = np.random.choice([delta, [-1, 0], [0, 1], [1, 0], [0, -1]], p=[1-self.slippery, individual_slippery, individual_slippery, individual_slippery, individual_slippery])
+
         new_position = np.array(current) + np.array(delta)
         new_position = self._limit_coordinates(new_position).astype(int)  # convert a list of float to a list of int
         new_state = np.ravel_multi_index(tuple(new_position), self.shape)  # get its state id
         if self._obs[tuple(new_position)]:
-            return [(1.0, self.start_state_index, -100, False)]  # return to start, give reward -100
+            return [(self.not_moving_on_obs, self.start_state_index, self.obs_reward, False)]  # return to start, give reward -100
 
-        terminal_state = (self.shape[0] - 1, self.shape[1] - 1)
-        is_done = tuple(new_position) == terminal_state
-        return [(1.0, new_state, -1, is_done)]
+        is_done = tuple(new_position) == self.end_coord
+        if is_done: return [(self.not_moving, new_state, self.end_award, is_done)]
+        return [(self.not_moving, new_state, self.step_award, is_done)]
 
     def render(self, mode='human'):
-        outfile = sys.stdout
+        # outfile = sys.stdout
         out = '\r'
 
         for s in range(self.nS):
@@ -97,7 +105,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
             if self.s == s:
                 out += " ★ "
             # Print terminal state
-            elif position == (3, 11):
+            elif position == self.end_coord:
                 out += " √ "
             elif self._obs[position]:
                 out += " × "
@@ -111,5 +119,5 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
                 out += '\n'
 
             # outfile.write(output)
-        outfile.write(out, '\n',)
+        print(out, '\n',)
 
