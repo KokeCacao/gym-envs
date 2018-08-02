@@ -100,27 +100,26 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         return [(self.not_moving, new_state, self.step_award, is_done)]
 
     def render(self, mode='human'):
-        # outfile = sys.stdout
-        out = '\rv1.0\n'
-
+        outfile = sys.stdout
+        outfile.write('\rv1.1\n')
         for s in range(self.nS):
             position = np.unravel_index(s, self.shape)
             if self.s == s:
-                out += " ★ "
+                output = " ★ "
             # Print terminal state
             elif position == self.end_coord:
-                out += " √ "
-            elif self._obs[position]:
-                out += " × "
+                output = " √ "
+            elif self._cliff[position]:
+                output = " × "
             else:
-                out += " □ "
+                output = " □ "
 
             if position[1] == 0:
-                out += out.lstrip()
+                output = output.lstrip()
             if position[1] == self.shape[1] - 1:
-                out += out.rstrip()
-                out += '\n'
+                output = output.rstrip()
+                output += '\n'
 
-            # outfile.write(output)
-        sys.stdout.write(out, '\n',)
+            outfile.write(output)
+        outfile.write('\n')
 
