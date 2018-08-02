@@ -38,7 +38,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # Obs Location
         self._obs = np.zeros(self.shape, dtype=np.bool)
         self._obs[3, 1:-1] = True
-        self.obs_reward = -1000
+        self.obs_reward = -100
         self.slippery = 0.1
         self.not_moving = 1.0
         self.not_moving_on_obs = 1.0
@@ -84,8 +84,10 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         :return: (1.0, new_state, reward, done)
         """
         old_delta = delta
+        choice = [delta, [-1, 0], [0, 1], [1, 0], [0, -1]]
         individual_slippery = self.slippery/4
-        delta = np.random.choice([delta, [-1, 0], [0, 1], [1, 0], [0, -1]], p=[1-self.slippery, individual_slippery, individual_slippery, individual_slippery, individual_slippery])
+        i = np.random.choice([0,1,2,3,4], p=[1-self.slippery, individual_slippery, individual_slippery, individual_slippery, individual_slippery])
+        delta = choice[i]
         if delta != old_delta: print("slippery!\n")
         new_position = np.array(current) + np.array(delta)
         new_position = self._limit_coordinates(new_position).astype(int)  # convert a list of float to a list of int
