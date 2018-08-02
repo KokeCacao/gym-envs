@@ -1,5 +1,7 @@
+# coding=utf-8
 import numpy as np
 import sys
+import time
 from gym.envs.toy_text import discrete
 
 UP = 0
@@ -92,14 +94,14 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         for s in range(self.nS):
             position = np.unravel_index(s, self.shape)
             if self.s == s:
-                output = " x "
+                output = " ★ "
             # Print terminal state
             elif position == (3, 11):
-                output = " T "
+                output = " √ "
             elif self._obs[position]:
-                output = " C "
+                output = " × "
             else:
-                output = " o "
+                output = " □ "
 
             if position[1] == 0:
                 output = output.lstrip()
@@ -108,5 +110,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
                 output += '\n'
 
             outfile.write(output)
+            time.sleep(0.001)
+            outfile.flush()
         outfile.write('\n')
 
