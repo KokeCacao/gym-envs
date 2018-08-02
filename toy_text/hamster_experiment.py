@@ -122,5 +122,5 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
                 out += '\n'
 
             # outfile.write(output)
-        print(out, '\n',)
+        sys.stdout.write(out, '\n',)
 
