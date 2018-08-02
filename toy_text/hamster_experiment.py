@@ -90,6 +90,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
 
     def render(self, mode='human'):
         outfile = sys.stdout
+        sys.stdout.write('\r')
 
         for s in range(self.nS):
             position = np.unravel_index(s, self.shape)
@@ -110,7 +111,5 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
                 output += '\n'
 
             outfile.write(output)
-            time.sleep(0.001)
-            outfile.flush()
-        outfile.write('\n')
+        outfile.write('\n',)
 
