@@ -32,6 +32,20 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
     #############Configuration############
 
     def __init__(self):
+        ########## YOU KNOW WHAT, I WILL TAKE MY RISK ##########
+        # self.shape = (4, 12)  # shape of the map (y, x)
+        # self.start_state_index = np.ravel_multi_index((3, 0), self.shape)  # return the id of the state on (y=3, x=0)
+        # self.end_coord = (3, 11)
+        # # Obs Location
+        # self._obs = np.zeros(self.shape, dtype=np.bool)
+        # self._obs[3, 1:-1] = True
+        # self.obs_reward = -100
+        # self.slippery = 0.1  # add slippery!!!!
+        # self.not_moving = 1.0
+        # self.not_moving_on_obs = 1.0
+        # self.end_award = 1.0
+        # self.step_award = -1.0
+
         self.shape = (4, 12)  # shape of the map (y, x)
         self.start_state_index = np.ravel_multi_index((3, 0), self.shape)  # return the id of the state on (y=3, x=0)
         self.end_coord = (3, 11)
@@ -43,7 +57,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         self.not_moving = 1.0
         self.not_moving_on_obs = 1.0
         self.end_award = 1.0
-        self.step_award = -1.0
+        self.step_award = -0.1
 
         nS = np.prod(self.shape)  # number of states
         nA = 4  # number of action
@@ -109,7 +123,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
             # Print terminal state
             elif position == self.end_coord:
                 output = " √ "
-            elif self._cliff[position]:
+            elif self._obs[position]:
                 output = " × "
             else:
                 output = " □ "
