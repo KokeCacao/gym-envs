@@ -74,7 +74,8 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # self.step_award = -1.0  # STEP PENATY!
 
         self.shape = (7, 12)  # shape of the map (y, x)
-        self.start_state_index = np.ravel_multi_index((6, 0), self.shape)  # return the id of the state on (y=3, x=0)
+        self.start_coord = (6, 0)
+        self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
         self.end_coord = (5, 11)
         # Obs Location
         self._obs = np.zeros(self.shape, dtype=np.bool)
@@ -104,6 +105,15 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         isd[self.start_state_index] = 1.0
 
         super(HamsterExperimentEnv, self).__init__(nS, nA, P, isd)
+
+    def get_start(self):
+        return self.start_coord
+    def get_start_index(self):
+        return self.start_state_index
+    def get_end(self):
+        return self.end_coord
+    def get_shape(self):
+        return self.shape
 
     def _limit_coordinates(self, coord):
         """
