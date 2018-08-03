@@ -61,15 +61,34 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # self.end_award = 10.0
         # self.step_award = -0.1
 
-        self.shape = (7, 12)  # shape of the map (y, x)
+        # 0 = normal step
+        # 1 = obs
+        # 2 = start
+        # 3 = end
+        # 4 = rock
+        self.map = np.array([
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [2,1,1,1,1,1,1,1,1,1,1,3],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+        ])
+
+        self.shape = self.map.shape()  # shape of the map (y, x)
         # TRY CHANGING THE COORDINATE FROM 5 TO 6
-        self.start_coord = (6, 0)
+        self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
         self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
-        self.end_coord = (5, 11)
+        self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
         # Obs Location
-        self._obs = np.zeros(self.shape, dtype=np.bool)
-        self._obs[5, 1:-1] = True
+        self.obs = tuple(zip(*np.where(self.map == 1)))
         self.obs_reward = -100
+
+        self.rocky[5, 1:-1]
+        self.rocky_reward = -5
+
+
         self.slippery = 0.2
         self.not_moving = 1.0
         self.not_moving_on_obs = 1.0
@@ -146,10 +165,11 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         new_position = np.array(current) + np.array(delta)
         new_position = self._limit_coordinates(new_position).astype(int)  # convert a list of float to a list of int
         new_state = np.ravel_multi_index(tuple(new_position), self.shape)  # get its state id
-        if self._obs[tuple(new_position)]:
+        if tuple(new_position) in self.obs:
             return [(self.not_moving_on_obs, self.start_state_index, self.obs_reward, False)]  # return to start, give reward -100
-
         is_done = tuple(new_position) == self.end_coord
+        if self.rocky[tuple(new_position)]:
+            return [(self.not_moving_on_obs, new_state, self.rocky_reward, is_done)]
         if is_done: return [(self.not_moving, new_state, self.end_award, is_done)]
         return [(self.not_moving, new_state, self.step_award, is_done)]
 
@@ -163,7 +183,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
             # Print terminal state
             elif position == self.end_coord:
                 output = " √ "
-            elif self._obs[position]:
+            elif position in self.obs:
                 output = " × "
             else:
                 output = " □ "
