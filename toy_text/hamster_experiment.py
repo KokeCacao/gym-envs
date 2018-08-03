@@ -32,82 +32,93 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
     #############Configuration############
 
     def __init__(self):
-        ########## YOU KNOW WHAT, I WILL TAKE MY RISK ##########
-        # self.shape = (4, 12)  # shape of the map (y, x)
-        # self.start_coord = (3, 0)
-        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
-        # self.end_coord = (3, 11)
-        # # Obs Location
-        # self._obs = np.zeros(self.shape, dtype=np.bool)
-        # self._obs[3, 1:-1] = True
-        # self.obs_reward = -100
-        # self.slippery = 0.1  # add slippery!!!!
-        # self.not_moving = 1.0
-        # self.not_moving_on_obs = 1.0
-        # self.end_award = 1.0
-        # self.step_award = -1.0
-
-        # self.shape = (7, 12)  # shape of the map (y, x)
-        # self.start_coord = (5, 0)
-        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
-        # self.end_coord = (5, 11)
-        # # Obs Location
-        # self._obs = np.zeros(self.shape, dtype=np.bool)
-        # self._obs[5, 1:-1] = True
-        # self.obs_reward = -100
-        # self.slippery = 0.1
-        # self.not_moving = 1.0
-        # self.not_moving_on_obs = 1.0
-        # self.end_award = 10.0
-        # self.step_award = -0.1
 
         # 0 = normal step
         # 1 = obs
         # 2 = start
         # 3 = end
         # 4 = rock
+
+        # ##### YOU KNOW WAT, I HATE ROCKY MORE THAN TAKING RISK #####
+        # self.map = np.array([
+        #     [0,0,0,0,0,0,0,0,0,0,0,0],
+        #     [0,0,0,0,0,0,0,0,0,0,0,0],
+        #     [0,0,0,0,0,0,0,0,4,4,4,0],
+        #     [0,0,0,0,0,0,0,0,4,4,0,0],
+        #     [0,4,4,4,0,0,0,0,4,4,4,0],
+        #     [2,1,1,1,1,1,1,1,1,1,1,3],
+        #     [0,0,0,0,0,0,0,0,0,0,0,0]
+        # ])
+
+        # self.obs_reward = -100
+        # self.rocky_reward = -5
+        # self.end_award = 10.0
+        # self.step_award = -1.0  # STEP PENATY!
+
+        # self.slippery = 0.2
+        # self.not_moving = 1.0
+        # self.not_moving_on_obs = 1.0
+
+        # self.shape = self.map.shape
+        # self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
+        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
+        # self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
+        # self.obs = tuple(zip(*np.where(self.map == 1)))
+        # self.rocky = tuple(zip(*np.where(self.map == 4)))
+
+        # ##### YOU KNOW WAT, ROCKY IS FINE, I HATE OBS #####
+        # self.map = np.array([
+        #     [0,0,0,0,0,0,0,0,0,0,0,0],
+        #     [0,0,0,0,0,0,0,0,0,0,0,0],
+        #     [0,0,0,0,0,0,0,0,4,4,4,0],
+        #     [0,0,0,0,0,0,0,0,4,4,0,0],
+        #     [0,4,4,4,0,0,0,0,4,4,4,0],
+        #     [2,1,1,1,1,1,1,1,1,1,1,3],
+        #     [0,0,0,0,0,0,0,0,0,0,0,0]
+        # ])
+
+        # self.obs_reward = -100
+        # self.rocky_reward = -1.0
+        # self.end_award = 10.0
+        # self.step_award = -1.0  # STEP PENATY!
+
+        # self.slippery = 0.2
+        # self.not_moving = 1.0
+        # self.not_moving_on_obs = 1.0
+
+        # self.shape = self.map.shape
+        # self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
+        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
+        # self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
+        # self.obs = tuple(zip(*np.where(self.map == 1)))
+        # self.rocky = tuple(zip(*np.where(self.map == 4)))
+
+        # ##### JUMP OUT OF LOCAL MINUMUM, STAY IN CLEAN FIELD #####
         self.map = np.array([
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,4,4,4,0],
-            [0,0,0,0,0,0,0,0,4,4,0,0],
-            [0,4,4,4,0,0,0,0,4,4,4,0],
+            [4,4,0,0,0,0,0,4,4,4,4,0],
+            [0,4,0,0,0,0,4,4,4,4,0,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
             [2,1,1,1,1,1,1,1,1,1,1,3],
-            [0,0,0,0,0,0,0,0,0,0,0,0]
+            [4,0,0,0,0,0,0,0,0,0,0,0]
         ])
 
-        self.shape = self.map.shape  # shape of the map (y, x)
-        # TRY CHANGING THE COORDINATE FROM 5 TO 6
-        self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
-        self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
-        self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
-        # Obs Location
-        self.obs = tuple(zip(*np.where(self.map == 1)))
-        self.obs_reward = -100
-
-        self.rocky = tuple(zip(*np.where(self.map == 4)))
-        self.rocky_reward = -5
-
+        self.obs_reward = -400
+        self.rocky_reward = -1.0
+        self.end_award = 10.0
+        self.step_award = -0.1  # STEP PENATY!
 
         self.slippery = 0.2
         self.not_moving = 1.0
         self.not_moving_on_obs = 1.0
-        self.end_award = 10.0
-        self.step_award = -1.0  # STEP PENATY!
 
-        # self.shape = (7, 12)  # shape of the map (y, x)
-        # self.start_coord = (6, 0)
-        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
-        # self.end_coord = (5, 11)
-        # # Obs Location
-        # self._obs = np.zeros(self.shape, dtype=np.bool)
-        # self._obs[5, 1:-1] = True
-        # self.obs_reward = -100
-        # self.slippery = 0.2
-        # self.not_moving = 1.0
-        # self.not_moving_on_obs = 1.0
-        # self.end_award = 10.0
-        # self.step_award = -0.1  # STEP PENATY!
+        self.shape = self.map.shape
+        self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
+        self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
+        self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
+        self.obs = tuple(zip(*np.where(self.map == 1)))
+        self.rocky = tuple(zip(*np.where(self.map == 4)))
 
         nS = np.prod(self.shape)  # number of states
         nA = 4  # number of action
