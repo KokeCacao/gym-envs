@@ -69,14 +69,14 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         self.map = np.array([
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,4,4,4,0],
+            [0,0,0,0,0,0,0,0,4,4,0,0],
+            [0,4,4,4,0,0,0,0,4,4,4,0],
             [2,1,1,1,1,1,1,1,1,1,1,3],
-            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
         ])
 
-        self.shape = self.map.shape()  # shape of the map (y, x)
+        self.shape = self.map.shape  # shape of the map (y, x)
         # TRY CHANGING THE COORDINATE FROM 5 TO 6
         self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
         self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
@@ -85,7 +85,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         self.obs = tuple(zip(*np.where(self.map == 1)))
         self.obs_reward = -100
 
-        self.rocky[5, 1:-1]
+        self.rocky = tuple(zip(*np.where(self.map == 4)))
         self.rocky_reward = -5
 
 
