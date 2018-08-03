@@ -168,7 +168,7 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         if tuple(new_position) in self.obs:
             return [(self.not_moving_on_obs, self.start_state_index, self.obs_reward, False)]  # return to start, give reward -100
         is_done = tuple(new_position) == self.end_coord
-        if self.rocky[tuple(new_position)]:
+        if tuple(new_position) in self.rocky:
             return [(self.not_moving_on_obs, new_state, self.rocky_reward, is_done)]
         if is_done: return [(self.not_moving, new_state, self.end_award, is_done)]
         return [(self.not_moving, new_state, self.step_award, is_done)]

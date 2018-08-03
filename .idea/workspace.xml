@@ -16,8 +16,8 @@
       <file leaf-file-name="hamster_experiment.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/toy_text/hamster_experiment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
+            <state relative-caret-position="195">
+              <caret line="170" column="44" selection-start-line="170" selection-start-column="44" selection-end-line="170" selection-end-column="44" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -54,6 +54,7 @@
       <find>each</find>
       <find>start_coord</find>
       <find>obs</find>
+      <find>rocky</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -228,8 +229,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/toy_text/hamster_experiment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="87" column="54" selection-start-line="87" selection-start-column="54" selection-end-line="87" selection-end-column="54" />
+        <state relative-caret-position="195">
+          <caret line="170" column="44" selection-start-line="170" selection-start-column="44" selection-end-line="170" selection-end-column="44" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
