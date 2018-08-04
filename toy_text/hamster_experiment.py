@@ -40,31 +40,31 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # 4 = rock
 
         # ##### YOU KNOW WAT, I HATE ROCKY MORE THAN TAKING RISK #####
-        # self.map = np.array([
-        #     [0,0,0,0,0,0,0,0,0,0,0,0],
-        #     [0,0,0,0,0,0,0,0,0,0,0,0],
-        #     [0,0,0,0,0,0,0,0,4,4,4,0],
-        #     [0,0,0,0,0,0,0,0,4,4,0,0],
-        #     [0,4,4,4,0,0,0,0,4,4,4,0],
-        #     [2,1,1,1,1,1,1,1,1,1,1,3],
-        #     [0,0,0,0,0,0,0,0,0,0,0,0]
-        # ])
+        self.map = np.array([
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,4,4,4,0],
+            [0,0,0,0,0,0,0,0,4,4,0,0],
+            [0,4,4,4,0,0,0,0,4,4,4,0],
+            [2,1,1,1,1,1,1,1,1,1,1,3],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
+        ])
 
-        # self.obs_reward = -100
-        # self.rocky_reward = -5
-        # self.end_award = 10.0
-        # self.step_award = -1.0  # STEP PENATY!
+        self.obs_reward = -100
+        self.rocky_reward = -5
+        self.end_award = 10.0
+        self.step_award = -1.0  # STEP PENATY!
 
-        # self.slippery = 0.2
-        # self.not_moving = 1.0
-        # self.not_moving_on_obs = 1.0
+        self.slippery = 0.2
+        self.not_moving = 1.0
+        self.not_moving_on_obs = 1.0
 
-        # self.shape = self.map.shape
-        # self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
-        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
-        # self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
-        # self.obs = tuple(zip(*np.where(self.map == 1)))
-        # self.rocky = tuple(zip(*np.where(self.map == 4)))
+        self.shape = self.map.shape
+        self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
+        self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
+        self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
+        self.obs = tuple(zip(*np.where(self.map == 1)))
+        self.rocky = tuple(zip(*np.where(self.map == 4)))
 
         # ##### YOU KNOW WAT, ROCKY IS FINE, I HATE OBS #####
         # self.map = np.array([
@@ -94,31 +94,31 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         # self.rocky = tuple(zip(*np.where(self.map == 4)))
 
         # ##### JUMP OUT OF LOCAL MINUMUM, STAY IN CLEAN FIELD #####
-        self.map = np.array([
-            [0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0],
-            [4,4,0,0,0,0,0,4,4,4,4,0],
-            [0,4,0,0,0,0,4,4,4,4,0,0],
-            [0,4,4,4,4,4,4,4,4,4,4,0],
-            [2,1,1,1,1,1,1,1,1,1,1,3],
-            [4,0,0,0,0,0,0,0,0,0,0,0]
-        ])
+        # self.map = np.array([
+        #     [0,0,0,0,0,0,0,0,0,0,0,0],
+        #     [0,0,0,0,0,0,0,0,0,0,0,0],
+        #     [4,4,0,0,0,0,0,4,4,4,4,0],
+        #     [0,4,0,0,0,0,4,4,4,4,0,0],
+        #     [0,4,4,4,4,4,4,4,4,4,4,0],
+        #     [2,1,1,1,1,1,1,1,1,1,1,3],
+        #     [4,0,0,0,0,0,0,0,0,0,0,0]
+        # ])
 
-        self.obs_reward = -400
-        self.rocky_reward = -1.0
-        self.end_award = 10.0
-        self.step_award = -0.1  # STEP PENATY!
+        # self.obs_reward = -400
+        # self.rocky_reward = -1.0
+        # self.end_award = 10.0
+        # self.step_award = -0.1  # STEP PENATY!
 
-        self.slippery = 0.2
-        self.not_moving = 1.0
-        self.not_moving_on_obs = 1.0
+        # self.slippery = 0.2
+        # self.not_moving = 1.0
+        # self.not_moving_on_obs = 1.0
 
-        self.shape = self.map.shape
-        self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
-        self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
-        self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
-        self.obs = tuple(zip(*np.where(self.map == 1)))
-        self.rocky = tuple(zip(*np.where(self.map == 4)))
+        # self.shape = self.map.shape
+        # self.start_coord = tuple(zip(*np.where(self.map == 2)))[0]
+        # self.start_state_index = np.ravel_multi_index(self.start_coord, self.shape)  # return the id of the state on (y=3, x=0)
+        # self.end_coord = tuple(zip(*np.where(self.map == 3)))[0]
+        # self.obs = tuple(zip(*np.where(self.map == 1)))
+        # self.rocky = tuple(zip(*np.where(self.map == 4)))
 
         nS = np.prod(self.shape)  # number of states
         nA = 4  # number of action
@@ -172,16 +172,18 @@ class HamsterExperimentEnv(discrete.DiscreteEnv):
         individual_slippery = self.slippery/4
         i = np.random.choice([0,1,2,3,4], p=[1-self.slippery, individual_slippery, individual_slippery, individual_slippery, individual_slippery])
         delta = choice[i]
-        if delta != old_delta: print("slippery!\n")
         new_position = np.array(current) + np.array(delta)
         new_position = self._limit_coordinates(new_position).astype(int)  # convert a list of float to a list of int
         new_state = np.ravel_multi_index(tuple(new_position), self.shape)  # get its state id
+        
         if tuple(new_position) in self.obs:
             return [(self.not_moving_on_obs, self.start_state_index, self.obs_reward, False)]  # return to start, give reward -100
         is_done = tuple(new_position) == self.end_coord
+        
         if tuple(new_position) in self.rocky:
             return [(self.not_moving_on_obs, new_state, self.rocky_reward, is_done)]
         if is_done: return [(self.not_moving, new_state, self.end_award, is_done)]
+        
         return [(self.not_moving, new_state, self.step_award, is_done)]
 
     def render(self, mode='human'):
